@@ -1,3 +1,3 @@
-# LeadsNearby Page duplicator
+# LeadsNearby Page Duplicator
 
 Basic Wordpress page duplicator
