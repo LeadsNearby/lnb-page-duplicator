@@ -3,7 +3,7 @@
 Plugin Name: LeadsNearby Page Duplicator
 Plugin URI: http://leadsnearby.com
 Description: Basic Page Duplicator
-Version: 1.1.0
+Version: 1.1.1
 Author: Leads Nearby
 Author URI: http://leadsnerby.com
 License: GPLv2
