@@ -7,54 +7,54 @@ Version: 1.1.1
 Author: Leads Nearby
 Author URI: http://leadsnerby.com
 License: GPLv2
-*/
+ */
 
-require_once( plugin_dir_path( __FILE__ ) . '/inc/class-page-duplicator.php' );
+require_once plugin_dir_path(__FILE__) . '/inc/class-page-duplicator.php';
 
 // Add the duplicate link to action list for post_row_actions
-function lnb_page_duplicator_link( $actions, $post ) {
+function lnb_page_duplicator_link($actions, $post) {
 
-	if( current_user_can( 'edit_posts' ) ) {
+    if (current_user_can('edit_posts')) {
 
-		$actions['duplicate'] = '<a href="admin.php?action=lnb_duplicate_post&amp;post=' . $post->ID . '" title="Clone this item" rel="permalink">Clone</a>';
+        $actions['duplicate'] = '<a href="admin.php?action=lnb_duplicate_post&amp;post=' . $post->ID . '" title="Clone this item" rel="permalink">Clone</a>';
 
-	}
+    }
 
-return $actions;
+    return $actions;
 
 }
-	 
-add_filter( 'post_row_actions', 'lnb_page_duplicator_link', 10, 2 );
-add_filter( 'page_row_actions', 'lnb_page_duplicator_link', 10, 2);
+
+add_filter('post_row_actions', 'lnb_page_duplicator_link', 10, 2);
+add_filter('page_row_actions', 'lnb_page_duplicator_link', 10, 2);
 
 function lnb_page_duplicator_init() {
 
-	$post_id = $_GET['post'];
+    $post_id = $_GET['post'];
 
-	if( ! ( $post_id && ( $_REQUEST['action'] && 'lnb_duplicate_post' == $_REQUEST['action'] ) ) ) {
+    if (!($post_id && ($_REQUEST['action'] && 'lnb_duplicate_post' == $_REQUEST['action']))) {
 
-		LeadsNearby_Page_Duplicator::throw_error( 'No post to duplicate has been supplied!' );
+        LeadsNearby_Page_Duplicator::throw_error('No post to duplicate has been supplied!');
 
-	} else {
+    } else {
 
-		$draft = new LeadsNearby_Page_Duplicator( $post_id );
+        $draft = new LeadsNearby_Page_Duplicator($post_id);
 
-	}
+    }
 
 }
 
-add_action( 'admin_action_lnb_duplicate_post', 'lnb_page_duplicator_init' );
+add_action('admin_action_lnb_duplicate_post', 'lnb_page_duplicator_init');
 
-if( is_admin() ) {
+if (is_admin()) {
 
-	require_once( plugin_dir_path( __FILE__ ) . '/inc/updater/github-updater.php' );
+    require_once plugin_dir_path(__FILE__) . '/inc/updater/github-updater.php';
 
-	add_action( 'admin_init', 'lnb_page_duplicator_update' );
+    add_action('admin_init', 'lnb_page_duplicator_update');
 
 }
 
 function lnb_page_duplicator_update() {
 
-	new GitHubPluginUpdater( __FILE__, 'LeadsNearby', 'lnb-page-duplicator' );
+    new GitHubPluginUpdater(__FILE__, 'LeadsNearby', 'lnb-page-duplicator');
 
 }
