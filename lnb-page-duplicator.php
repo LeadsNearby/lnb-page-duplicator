@@ -45,16 +45,8 @@ function lnb_page_duplicator_init() {
 
 add_action('admin_action_lnb_duplicate_post', 'lnb_page_duplicator_init');
 
-if (is_admin()) {
-
-    require_once plugin_dir_path(__FILE__) . '/inc/updater/github-updater.php';
-
-    add_action('admin_init', 'lnb_page_duplicator_update');
-
-}
-
-function lnb_page_duplicator_update() {
-
-    new GitHubPluginUpdater(__FILE__, 'LeadsNearby', 'lnb-page-duplicator');
-
-}
+add_action('admin_init', function () {
+    if (class_exists('\lnb\core\GitHubPluginUpdater')) {
+        new \lnb\core\GitHubPluginUpdater(__FILE__, 'lnb-page-duplicator');
+    }
+}, 99);
